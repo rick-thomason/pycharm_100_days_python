@@ -1,20 +1,22 @@
 from data import MENU, resources
 
-# TODO: 1. Print a report of the all the coffee machine resources
-report = f'Water: {resources["water"]}ml\nMilk: {resources["milk"]}ml\nCoffee: {resources["coffee"]}g'
 
-is_off = False
+def is_resource_sufficient(order_ingredients):
+    for item in order_ingredients:
+        if order_ingredients[item] >= resources[item]:
+            print(f'Sorry there is not enough {item}.')
+            return False
+    return True
 
-# TODO: 2. Ask user what choice they would prefer
-while not is_off:
+is_on = True
+
+while is_on:
     choice = input('Would you like an espresso/latte/cappuccino? ').lower()
-
-    if choice == 'report':
-        print(report)
-
     # Turns coffee maker off
     if choice == 'off':
-        is_off = True
-
-
-
+        is_on = False
+    elif choice == 'report':
+        print(f'Water: {resources["water"]}ml\nMilk: {resources["milk"]}ml\nCoffee: {resources["coffee"]}g')
+    else:
+        drink = MENU[choice]
+        is_resource_sufficient(drink['ingredients'])
