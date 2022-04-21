@@ -1,1 +1,4 @@
-print('hey there')
+from data import MENU
+
+espresso = MENU['espresso']
+print(espresso['ingredients'])
