@@ -25,6 +25,7 @@ def turtle_dash_line(num_dashes):
         timmy.forward(10)
 
 
+# function to draw any shape with any number of sides
 def draw_shape(num_sides):
     angle = 360 / num_sides
     for _ in range(num_sides):
@@ -35,7 +36,6 @@ def draw_shape(num_sides):
 for shape_side_n in range(3, 11):
     timmy.color(random.choice(colors))
     draw_shape(shape_side_n)
-
 
 # turtle_square()
 # turtle_dash_line(20)
