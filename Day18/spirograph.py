@@ -19,13 +19,13 @@ pensize = list(range(0, 11))
 
 def draw_spirograph(size_of_gap):
     for _ in range(int(360 / size_of_gap)):
-        timmy.pensize(random.choice(pensize))
+        # timmy.pensize(random.choice(pensize))
         timmy.color(gen_random_color())
         timmy.circle(100)
         timmy.setheading(timmy.heading() + size_of_gap)
 
 
-draw_spirograph(10)
+draw_spirograph(5)
 
 screen = turtle.Screen()
 screen.exitonclick()
