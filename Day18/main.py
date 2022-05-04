@@ -13,7 +13,15 @@ def turtle_square():
         timmy.right(90)
 
 
-turtle_square()
+def turtle_dash_line():
+    for _ in range(10):
+        timmy.pd()
+        timmy.forward(10)
+        timmy.pu()
+        timmy.forward(10)
 
+
+# turtle_square()
+turtle_dash_line()
 screen = Screen()
 screen.exitonclick()
