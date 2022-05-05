@@ -1,5 +1,5 @@
 from turtle import Turtle
-snake = Turtle(shape='square')
+segment_1 = Turtle(shape='square')
 
 
 def move_forward():
