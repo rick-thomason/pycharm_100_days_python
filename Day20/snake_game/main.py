@@ -6,7 +6,7 @@ import time
 
 snake = Snake()
 food = Food()
-score = Scoreboard()
+scoreboard = Scoreboard()
 
 screen = Screen()
 screen.setup(width=600, height=600)
@@ -29,6 +29,7 @@ while is_game_on:
     # Detect if snake has run into food
     if snake.head.distance(food) < 15:
         food.refresh()
+        scoreboard.increase_score()
 
 
 
