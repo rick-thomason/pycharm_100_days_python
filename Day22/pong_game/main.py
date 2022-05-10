@@ -10,8 +10,7 @@ screen.setup(height=600, width=800)
 screen.bgcolor('black')
 screen.tracer(0)
 
-left_scoreboard = Scoreboard((-200, 270))
-right_scoreboard = Scoreboard((200, 270))
+scoreboard = Scoreboard()
 
 left_paddle = Paddle((-350, 0))
 right_paddle = Paddle((350, 0))
@@ -23,10 +22,10 @@ screen.onkey(fun=left_paddle.move_down, key='s')
 screen.onkey(fun=right_paddle.move_up, key='Up')
 screen.onkey(fun=right_paddle.move_down, key='Down')
 
-speed = 0.1
+
 game_is_on = True
 while game_is_on:
-    time.sleep(speed)
+    time.sleep(ball.move_speed)
     screen.update()
     ball.move()
 
@@ -41,16 +40,12 @@ while game_is_on:
     # Detect if ball goes past right paddle
     if ball.xcor() > 380:
         ball.reset_position()
-        left_scoreboard.increase_score()
+        scoreboard.l_point()
 
     # Detect if ball goes past left paddle
     if ball.xcor() < -380:
         ball.reset_position()
-        right_scoreboard.increase_score()
+        scoreboard.r_point()
 
-    # Detect a winner
-    if left_scoreboard.score == 3 or right_scoreboard == 3:
-        game_is_on = False
-        left_scoreboard.game_over()
 
 screen.exitonclick()
