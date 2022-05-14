@@ -10,11 +10,21 @@ screen.addshape(image)
 
 turtle.shape(image)
 
-
-screen.exitonclick()
-
+guessed_states = []
 
 
+while len(guessed_states) < 50:
+    answer_state = screen.textinput(title=f'{len(guessed_states)}/50 Guess The State',
+                                    prompt='What"s another state"s name?').title()
+    for state in states['state']:
+        if answer_state == state:
+            guessed_states.append(answer_state)
+            t = turtle.Turtle()
+            t.hideturtle()
+            t.penup()
+            state_data = states[states['state'] == answer_state]
+            t.goto(int(state_data['x']), int(state_data['y']))
+            t.write(answer_state)
 
 
-
+turtle.mainloop()
