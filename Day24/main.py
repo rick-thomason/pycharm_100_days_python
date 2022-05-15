@@ -5,7 +5,7 @@
 # file.close()
 
 # more efficient way of opening and closing files
-with open('my_file.txt') as file:
+with open('/Users/rick/Desktop/my_file.txt') as file:
     contents = file.read()
     print(contents)
 

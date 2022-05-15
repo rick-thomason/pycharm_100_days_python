@@ -2,11 +2,7 @@ PLACEHOLDER = '[name]'
 
 # open up invited_names.txt and turn it into a list of names
 with open('./Input/Names/invited_names.txt') as names_file:
-    names = names_file.readlines()
-    stripped_names = []
-    for name in names:
-        stripped_names.append(name.strip())
-
+    stripped_names = [name.strip() for name in names_file.readlines()]
 
 # open letter up
 with open('./Input/Letters/starting_letter.txt') as letter_file:
