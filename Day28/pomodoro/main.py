@@ -5,18 +5,24 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
+WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
+timer = None
 
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 def reset_timer():
-    return timer_text
+    window.after_cancel(timer)
+    canvas.itemconfig(timer_text, text='00:00')
+    timer_label.config(text='Timer')
+    checkmark_label.config(text='')
+    global reps
+    reps = 0
 
 
-# ---------------------------- TIMER MECHANISM ------------------------------- # 
+# ---------------------------- TIMER MECHANISM ------------------------------- #
 def start_timer():
     global reps
     reps += 1
@@ -38,6 +44,7 @@ def start_timer():
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def count_down(count):
+    global timer
     min_count = count // 60
     sec_count = count % 60
 
@@ -49,9 +56,15 @@ def count_down(count):
 
     canvas.itemconfig(timer_text, text=f'{min_count}:{sec_count}')
     if count > 0:
-        window.after(1000, count_down, count - 1)
+        timer = window.after(1000, count_down, count - 1)
     else:
         start_timer()
+        marks = ''
+        work_sessions = reps // 2
+        for _ in range(work_sessions):
+            marks += '✅'
+
+        checkmark_label.config(text=marks)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -78,14 +91,8 @@ reset_button = tk.Button(text='Reset', command=reset_timer)
 reset_button.grid(column=2, row=2)
 
 # Checkmark Labels
-checkmark_label = tk.Label(text='✅', fg=GREEN, bg=YELLOW, pady=10)
+checkmark_label = tk.Label(fg=GREEN, bg=YELLOW, pady=10)
 checkmark_label.grid(column=1, row=3)
-# checkmark_label_2 = tk.Label(text='✔', fg=GREEN, bg=YELLOW)
-# checkmark_label_2.place(x=85, y=230)
-# checkmark_label_3 = tk.Label(text='✔', fg=GREEN, bg=YELLOW)
-# checkmark_label_3.place(x=105, y=230)
-# checkmark_label_4 = tk.Label(text='✔', fg=GREEN, bg=YELLOW)
-# checkmark_label_4.place(x=125, y=230)
 
 
 window.mainloop()
