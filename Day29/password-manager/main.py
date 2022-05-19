@@ -11,21 +11,15 @@ def generate_password():
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-    nr_letters = random.randint(8, 10)
-    nr_symbols = random.randint(2, 4)
-    nr_numbers = random.randint(2, 4)
-
-    password_letters = [random.choice(letters) for _ in range(nr_letters)]
-    password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
-    password_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+    password_letters = [random.choice(letters) for _ in range(random.randint(8, 10))]
+    password_symbols = [random.choice(symbols) for _ in range(random.randint(2, 4))]
+    password_numbers = [random.choice(numbers) for _ in range(random.randint(2, 4))]
 
     password_list = password_letters + password_symbols + password_numbers
 
     random.shuffle(password_list)
 
-    password = ""
-    for char in password_list:
-        password += char
+    password = ''.join(password_list)
 
     password_input.insert(0, password)
     # print(f"Your password is: {password}")
