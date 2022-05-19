@@ -1,22 +1,33 @@
 import tkinter as tk
+from tkinter import messagebox
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
-
-
+def generate_password():
+    pass
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_data():
+
     website_data = website_input.get()
     email_data = email_username_input.get()
     password_data = password_input.get()
 
-    with open('data.txt', 'a') as file:
-        file.write(f'{website_data} | {email_data} | {password_data}\n')
-        website_input.delete(0, 'end')
-        email_username_input.delete(0, 'end')
-        password_input.delete(0, 'end')
+    if len(website_data) == 0 or len(password_data) == 0 or len(email_data) == 0:
+        messagebox.showwarning(title='Oooops!', message='You must fill in all fields')
+    else:
+        is_ok = messagebox.askokcancel(title=website_data,
+                                       message=f'These are the details that were entered:\nEmail:{email_data}'
+                                               f'\nPassword: {password_data}\nIs it ok to save?')
+
+        if is_ok:
+            with open('data.txt', 'a') as file:
+                file.write(f'{website_data} | {email_data} | {password_data}\n')
+                website_input.delete(0, 'end')
+                password_input.delete(0, 'end')
+
+
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -53,7 +64,8 @@ password_input = tk.Entry(bg='white', width=21, fg='black', insertbackground='bl
 password_input.grid(column=1, row=3)
 
 # Buttons
-generate_password_button = tk.Button(text='Generate Password', width=13, activeforeground='black')
+generate_password_button = tk.Button(text='Generate Password', width=13, activeforeground='black',
+                                     command=generate_password)
 generate_password_button.grid(column=2, row=3, sticky='EW')
 
 add_button = tk.Button(text='Add', width=36, activeforeground='black', command=save_data)
