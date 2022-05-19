@@ -1,6 +1,9 @@
 import tkinter as tk
 
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -10,7 +13,10 @@ def save_data():
     password_data = password_input.get()
 
     with open('data.txt', 'a') as file:
-        file.write(f'{website_data} | {email_data} | {password_data}')
+        file.write(f'{website_data} | {email_data} | {password_data}\n')
+        website_input.delete(0, 'end')
+        email_username_input.delete(0, 'end')
+        password_input.delete(0, 'end')
 
 
 # ---------------------------- UI SETUP ------------------------------- #
