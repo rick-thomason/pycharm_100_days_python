@@ -1,13 +1,17 @@
+import json
 import tkinter as tk
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-               'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+               'v',
+               'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+               'R',
                'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
@@ -35,19 +39,32 @@ def save_data():
     website_data = website_input.get()
     email_data = email_username_input.get()
     password_data = password_input.get()
+    new_data = {
+        website_data: {
+            'email': email_data,
+            'password': password_data
+        }
+    }
 
     if len(website_data) == 0 or len(password_data) == 0 or len(email_data) == 0:
         messagebox.showwarning(title='Oooops!', message='You must fill in all fields')
     else:
-        is_ok = messagebox.askokcancel(title=website_data,
-                                       message=f'These are the details that were entered:\nEmail: {email_data}'
-                                               f'\nPassword: {password_data}\nIs it ok to save?')
+        try:
+            with open('data.json', 'r') as file:
+                # reading the data from file
+                data = json.load(file)
+                # updating the data
+                data.update(new_data)
+        except FileNotFoundError:
+            with open('data.json', 'w') as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            with open('data.json', 'w') as data_file:
+                # writing the updated data to file
+                json.dump(data, data_file, indent=4)
 
-        if is_ok:
-            with open('data.txt', 'a') as file:
-                file.write(f'{website_data} | {email_data} | {password_data}\n')
-                website_input.delete(0, 'end')
-                password_input.delete(0, 'end')
+        website_input.delete(0, 'end')
+        password_input.delete(0, 'end')
 
 
 # ---------------------------- UI SETUP ------------------------------- #
