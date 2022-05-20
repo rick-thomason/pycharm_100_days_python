@@ -36,8 +36,8 @@ def generate_password():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_data():
 
-    website_data = website_input.get()
-    email_data = email_username_input.get()
+    website_data = website_input.get().title()
+    email_data = email_username_input.get().lower()
     password_data = password_input.get()
     new_data = {
         website_data: {
@@ -62,9 +62,27 @@ def save_data():
             with open('data.json', 'w') as data_file:
                 # writing the updated data to file
                 json.dump(data, data_file, indent=4)
+        finally:
+            website_input.delete(0, 'end')
+            password_input.delete(0, 'end')
 
-        website_input.delete(0, 'end')
-        password_input.delete(0, 'end')
+
+# -----------------------------Find Password----------------------------#
+def find_password():
+    website = website_input.get().title()
+
+    try:
+        with open('data.json') as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title='Error!!!', message='No Data File Found')
+    else:
+        if website in data:
+            email = data[website]['email']
+            password = data[website]['password']
+            messagebox.showinfo(title=website, message=f'Email: {email}\nPassword: {password}')
+        else:
+            messagebox.showinfo(title='Error!!!', message=f'No Details For {website} Found')
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -81,32 +99,28 @@ canvas.grid(column=1, row=0)
 # Labels
 website_label = tk.Label(text='Website:', fg='black')
 website_label.grid(column=0, row=1)
-
 email_username_label = tk.Label(text='Email/Username:', fg='black')
 email_username_label.grid(column=0, row=2)
-
 password_label = tk.Label(text='Password:', fg='black')
 password_label.grid(column=0, row=3)
 
 # Inputs
-website_input = tk.Entry(bg='white', width=38, fg='black', insertbackground='black')
-website_input.grid(columnspan=2, column=1, row=1, sticky='EW')
+website_input = tk.Entry(bg='white', width=21, fg='black', insertbackground='black')
+website_input.grid(column=1, row=1, sticky='EW')
 website_input.focus()
-
 email_username_input = tk.Entry(bg='white', width=38, fg='black', insertbackground='black')
 email_username_input.grid(columnspan=2, column=1, row=2, sticky='EW')
 email_username_input.insert(0, 'rickbthomason@yahoo.com')
-
 password_input = tk.Entry(bg='white', width=21, fg='black', insertbackground='black')
 password_input.grid(column=1, row=3)
 
 # Buttons
+search_button = tk.Button(text='Search', width=13, activeforeground='black', command=find_password)
+search_button.grid(column=2, row=1, sticky='EW')
 generate_password_button = tk.Button(text='Generate Password', width=13, activeforeground='black',
                                      command=generate_password)
 generate_password_button.grid(column=2, row=3, sticky='EW')
-
 add_button = tk.Button(text='Add', width=36, activeforeground='black', command=save_data)
 add_button.grid(columnspan=2, column=1, row=4, sticky='EW')
-
 
 window.mainloop()
