@@ -25,6 +25,10 @@ def flip_card():
     canvas.itemconfig(card_background, image=card_back_image)
 
 
+def is_known():
+    pass
+
+
 window = tk.Tk()
 window.title('Flashy')
 window.config(bg=BACKGROUND_COLOR, padx=50, pady=50)
@@ -43,12 +47,12 @@ canvas.grid(columnspan=2, column=0, row=0)
 
 # Buttons
 wrong_image = tk.PhotoImage(file='images/wrong.png')
-wrong_button = tk.Button(image=wrong_image, highlightbackground=BACKGROUND_COLOR, command=next_card)
-wrong_button.grid(column=0, row=1)
+unknown_button = tk.Button(image=wrong_image, highlightbackground=BACKGROUND_COLOR, command=next_card)
+unknown_button.grid(column=0, row=1)
 
 correct_image = tk.PhotoImage(file='images/right.png')
-correct_button = tk.Button(image=correct_image, highlightbackground=BACKGROUND_COLOR, command=next_card)
-correct_button.grid(column=1, row=1)
+known_button = tk.Button(image=correct_image, highlightbackground=BACKGROUND_COLOR, command=is_known)
+known_button.grid(column=1, row=1)
 
 next_card()
 
