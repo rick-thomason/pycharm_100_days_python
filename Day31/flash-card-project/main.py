@@ -1,7 +1,6 @@
 import tkinter as tk
 import pandas as pd
 import random
-import time
 
 BACKGROUND_COLOR = "#B1DDC6"
 data = pd.read_csv('data/french_words.csv')
@@ -11,10 +10,13 @@ current_card = {}
 
 # function to call next card when button is clicked
 def next_card():
-    global current_card
+    global current_card, flip_timer
+    window.after_cancel(flip_timer)
     current_card = random.choice(to_learn)
-    canvas.itemconfig(card_title, text='French')
-    canvas.itemconfig(card_word, text=current_card['French'])
+    canvas.itemconfig(card_title, text='French', fill='black')
+    canvas.itemconfig(card_word, text=current_card['French'], fill='black')
+    canvas.itemconfig(card_background, image=card_front_image)
+    flip_timer = window.after(3000, func=flip_card)
 
 
 def flip_card():
@@ -27,7 +29,7 @@ window = tk.Tk()
 window.title('Flashy')
 window.config(bg=BACKGROUND_COLOR, padx=50, pady=50)
 
-window.after(3000, func=flip_card)
+flip_timer = window.after(3000, func=flip_card)
 
 # Canvas
 canvas = tk.Canvas(width=800, height=526)
