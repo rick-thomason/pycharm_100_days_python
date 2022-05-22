@@ -3,9 +3,16 @@ import pandas as pd
 import random
 
 BACKGROUND_COLOR = "#B1DDC6"
-data = pd.read_csv('data/french_words.csv')
-to_learn = data.to_dict(orient='records')
 current_card = {}
+to_learn = {}
+
+try:
+    data = pd.read_csv('data/words_to_learn.csv')
+except (FileNotFoundError, ValueError):
+    original_data = pd.read_csv('data/french_words.csv')
+    to_learn = original_data.to_dict(orient='records')
+else:
+    to_learn = data.to_dict(orient='records')
 
 
 # function to call next card when button is clicked
@@ -26,7 +33,10 @@ def flip_card():
 
 
 def is_known():
-    pass
+    to_learn.remove(current_card)
+    words_to_learn = pd.DataFrame(to_learn)
+    words_to_learn.to_csv('data/words_to_learn.csv', index=False)
+    next_card()
 
 
 window = tk.Tk()
