@@ -1,7 +1,6 @@
 import tkinter as tk
 import pandas as pd
 import random
-import time
 
 BACKGROUND_COLOR = "#B1DDC6"
 data = pd.read_csv('data/french_words.csv')
